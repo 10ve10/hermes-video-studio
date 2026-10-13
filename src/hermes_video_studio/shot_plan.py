@@ -61,7 +61,7 @@ def validate_shot_plan(project_dir: Path, plan_path: Path) -> list[str]:
             errors.append(f"{prefix}.character_slots must be a list")
         else:
             for ref in refs:
-                if ref not in slot_ids:
+                if not isinstance(ref, str) or ref not in slot_ids:
                     errors.append(f"{prefix} references unknown character slot: {ref}")
         if not isinstance(shot.get("description", ""), str):
             errors.append(f"{prefix}.description must be a string")
