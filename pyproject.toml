@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-video-studio"
+version = "0.1.0"
+description = "A modular video character-replacement studio for Hermes Agent"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "10ve10" }]
+dependencies = []
+
+[project.scripts]
+hermes-video-studio = "hermes_video_studio.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
