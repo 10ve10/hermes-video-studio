@@ -19,6 +19,7 @@ python -m pip install -e .
 hermes-video-studio --help
 hermes-video-studio init ./runs/demo --source ./media/source.mp4
 hermes-video-studio inspect ./runs/demo
+hermes-video-studio validate-plan ./runs/demo ./analysis/shot-plan.json
 python -m unittest discover -s tests -v
 ```
 
@@ -26,6 +27,7 @@ python -m unittest discover -s tests -v
 
 - Hermes-native skill entry point in `skills/video-replacement/SKILL.md`.
 - Provider-neutral generation adapter contract.
+- Shot-plan validator checks source hash, time ranges, shot IDs, and character-slot references.
 - Durable project manifest and explicit lifecycle.
 - Explicit per-run authorization gate before billable generation.
 - Neutral source templates separated from target identity references.
