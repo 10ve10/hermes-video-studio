@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "template_id": "source-<sha256-prefix>",
+  "title": "Neutral scene description",
+  "source": {
+    "sha256": "<full-sha256>",
+    "duration_seconds": null,
+    "width": null,
+    "height": null,
+    "frame_rate": null,
+    "audio_streams": []
+  },
+  "character_slots": [
+    {
+      "slot_id": "slot_01",
+      "neutral_role": "main_subject",
+      "position": "unknown",
+      "actions": []
+    }
+  ],
+  "shots": [],
+  "audio_policy": {
+    "preserve_source_audio": true
+  },
+  "backend_validation": {
+    "provider": null,
+    "profile": null,
+    "validated_for_source": false
+  },
+  "quality_control": {
+    "technical_status": "not_checked",
+    "visual_review_status": "not_reviewed",
+    "reviewed_windows": [],
+    "known_risks": []
+  },
+  "repair_rules": [],
+  "privacy_note": "Do not put target identity images, API keys, signed URLs, candidate clips, or final renders in reusable source templates."
+}
