@@ -3,6 +3,7 @@ from pathlib import Path
 from .media import MediaProbeError, probe_media
 from .models import RunStatus
 from .project import create_project, load_manifest, save_manifest
+from .shot_plan import ShotPlanError, validate_shot_plan
 from .workflow import WorkflowError, authorize_generation, transition
 
 def build_parser():
@@ -15,6 +16,8 @@ def build_parser():
     status = sub.add_parser("status", help="Show project state"); status.add_argument("project_dir", type=Path)
     move = sub.add_parser("transition", help="Change state with lifecycle validation")
     move.add_argument("project_dir", type=Path); move.add_argument("status", choices=[s.value for s in RunStatus]); move.add_argument("--note")
+    validate = sub.add_parser("validate-plan", help="Validate an authored shot plan against this source project")
+    validate.add_argument("project_dir", type=Path); validate.add_argument("plan_json", type=Path)
     auth = sub.add_parser("authorize-generation", help="Explicitly authorize potentially billable jobs")
     auth.add_argument("project_dir", type=Path); auth.add_argument("--confirm", action="store_true")
     return parser
@@ -35,6 +38,11 @@ def main(argv=None):
             print(json.dumps(load_manifest(args.project_dir).to_dict(), ensure_ascii=False, indent=2)); return 0
         if args.command == "transition":
             print(transition(args.project_dir, RunStatus(args.status), args.note).status.value); return 0
+        if args.command == "validate-plan":
+            errors = validate_shot_plan(args.project_dir, args.plan_json)
+            if errors:
+                print("\\n".join(f"- {e}" for e in errors), file=sys.stderr); return 2
+            print("shot plan valid"); return 0
         if args.command == "authorize-generation":
             authorize_generation(args.project_dir, confirmed=args.confirm); print("generation_authorized=true"); return 0
     except (OSError, ValueError, MediaProbeError, WorkflowError) as exc:
